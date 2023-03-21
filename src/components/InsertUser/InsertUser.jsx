@@ -11,7 +11,7 @@ export const InserUser = ({ player, setPlayer }) => {
 
     const handleClick = () => {
         setPlayer((prev) => {
-            return { ...prev, isActive: true, points:1000, inputPoint:50, Multiplier:1 }
+            return { ...prev, isActive: true, points:1000, inputPoint:50, multiplier:1 }
         });
     };
 

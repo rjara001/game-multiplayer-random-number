@@ -4,11 +4,19 @@ import { CurrentRound } from './CurrentRound.jsx'
 import { SpeedControl } from './SpeedControl.jsx'
 import { startPlay } from '../../utils/utils.jsx'
 import { useEffect } from "react"
+import {getRoundPlaying} from '../../utils/utils.jsx';
 
-export const PlayerInput = ({ player, setPlayer }) => {
+export const PlayerInput = ({ player, setPlayer, round, setRound }) => {
 
     const handleClickStart = () => {
-        startPlay();
+        setPlayer((prev)=>{
+            return {... prev, points: prev.points - prev.inputPoint}
+        });
+
+        setRound((prev)=>{
+            return {... prev, players:getRoundPlaying(prev, player)}
+        });
+
     }
 
     const handleIncreasePoint = () => {
@@ -53,6 +61,10 @@ export const PlayerInput = ({ player, setPlayer }) => {
         console.log('change user');
     }, [player])
 
+    useEffect(()=>{
+        console.log('change round');
+    }, [round])
+
     return <Grid>
         <div style={{ width: '380px' }}>
             <Grid style={{ display: 'flex', justifyContent: 'center' }} container spacing={2}>
@@ -69,7 +81,7 @@ export const PlayerInput = ({ player, setPlayer }) => {
             </div>
 
             <div>
-                <CurrentRound></CurrentRound>
+                <CurrentRound round={round}></CurrentRound>
             </div>
             <div>
                 <SpeedControl></SpeedControl>

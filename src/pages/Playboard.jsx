@@ -6,10 +6,11 @@ import { Chat } from "../components/Chat/Chat.jsx"
 import { InserUser } from "../components/InsertUser/InsertUser.jsx"
 import { useEffect, useState } from "react"
 import { Player } from "../models/player.jsx"
+import { Round } from "../models/round.jsx"
 
 export const Playboard = () => {
     const [player, setPlayer] = useState(new Player());
-
+    const [round, setRound] = useState(new Round());
     // useEffect(()=>{
     //     console.log(UserName);
     // }, [UserName]);
@@ -19,7 +20,7 @@ export const Playboard = () => {
             <Box>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <div style={{ paddingRight: '20px' }}>
-                        {player.isActive && <PlayerInput player={player} setPlayer={setPlayer}></PlayerInput>}
+                        {player.isActive && <PlayerInput player={player} setPlayer={setPlayer} round={round} setRound={setRound}></PlayerInput>}
                         {!player.isActive && <InserUser player={player} setPlayer={setPlayer}></InserUser>}
                     </div>
                     <div>

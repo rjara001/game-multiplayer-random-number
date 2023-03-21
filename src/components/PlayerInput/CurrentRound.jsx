@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { useState, useEffect } from "react"
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { createSvgIcon } from '@mui/material/utils';
 import { Button, Grid, SpeedDial } from "@mui/material"
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { getRows } from '../../utils/utils.jsx';
 
 const columns = [
     {
@@ -26,15 +28,24 @@ const columns = [
     }
 ];
 
-const rows = [
-    { id: 1, Name: 'You', Point: '-', Multiplier: '-' },
-    { id: 2, Name: 'CPU', Point: '-', Multiplier: '-' },
-    { id: 3, Name: 'CPU', Point: '-', Multiplier: '-' },
-    { id: 4, Name: 'CPU', Point: '-', Multiplier: '-' },
-    { id: 5, Name: 'CPU', Point: '-', Multiplier: '-' },
-];
+// const rows = [
+//     { id: 1, Name: 'You', Point: '-', Multiplier: '-' },
+//     { id: 2, Name: 'CPU', Point: '-', Multiplier: '-' },
+//     { id: 3, Name: 'CPU', Point: '-', Multiplier: '-' },
+//     { id: 4, Name: 'CPU', Point: '-', Multiplier: '-' },
+//     { id: 5, Name: 'CPU', Point: '-', Multiplier: '-' },
+// ];
 
-export const CurrentRound = () => {
+export const CurrentRound = ({ round }) => {
+    const [rows, setRows] = useState();
+
+    useEffect(()=>{
+        let values = getRows(round.players);
+        setRows(values);
+
+        console.log(rows);
+    }, [round]);
+
     return (
         <Grid>
             <Box>
@@ -48,13 +59,13 @@ export const CurrentRound = () => {
                 </Grid>
 
             </Box>
-            <Box sx={{ height: 400, width: '100%' }}>
+            {rows && <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
 
                 />
-            </Box>
+            </Box>}
         </Grid>
 
     );
