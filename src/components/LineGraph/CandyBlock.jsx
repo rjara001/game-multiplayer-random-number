@@ -5,6 +5,8 @@ import { makeStyles } from "@mui/styles";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import PersonIcon from '@mui/icons-material/Person';
+import TimerIcon from '@mui/icons-material/Timer';
 
 const PointInputStyles = makeStyles(() => ({
     number: {
@@ -46,7 +48,7 @@ const PointInputStyles = makeStyles(() => ({
     }
 }));
 
-export const CandyBlock = ({ title }) => {
+export const CandyBlock = ({ title, icon }) => {
     const classes = PointInputStyles();
 
     return (
@@ -54,7 +56,9 @@ export const CandyBlock = ({ title }) => {
 
             <div className={classes.textContainer}>
                 <div>
-                    <EmojiEventsIcon color="primary" className={classes.positionIcon} />
+                    {icon == 'cup' && <EmojiEventsIcon color="primary" className={classes.positionIcon} />}
+                    {icon == 'user' && <PersonIcon color="primary" className={classes.positionIcon} />}
+                    {icon == 'hour' && <TimerIcon color="primary" className={classes.positionIcon} />}
                 </div>
 
                 <div style={{ width: '100%', position: 'relative', top: '9px' }}>{title}</div>

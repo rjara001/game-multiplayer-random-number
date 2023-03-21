@@ -2,35 +2,84 @@ import { Button, Grid, SpeedDial } from "@mui/material"
 import { PointInput } from './PointInput.jsx'
 import { CurrentRound } from './CurrentRound.jsx'
 import { SpeedControl } from './SpeedControl.jsx'
+import { startPlay } from '../../utils/utils.jsx'
+import { useEffect } from "react"
 
-export const PlayerInput = () => {
+export const PlayerInput = ({ player, setPlayer }) => {
+
+    const handleClickStart = () => {
+        startPlay();
+    }
+
+    const handleIncreasePoint = () => {
+        setPlayer((prev) => {
+            return { ...prev, inputPoint: prev.inputPoint + 25 }
+        });
+    };
+
+    const handleDecreasePoint = () => {
+        setPlayer((prev) => {
+            return { ...prev, inputPoint: prev.inputPoint - 25 }
+        });
+    }
+
+    const handleIncreaseMultiplier = () => {
+        setPlayer((prev) => {
+            return { ...prev, multiplier: prev.multiplier + 0.25 }
+        });
+    };
+
+    const handleDecreaseMultiplier = () => {
+        setPlayer((prev) => {
+            return { ...prev, multiplier: prev.multiplier - 0.25 }
+        });
+    }
+
+    const setInputPoint = (value) =>{
+        setPlayer((prev) => {
+            return { ...prev, inputPoint: value }
+        });
+        
+    }
+
+    const setInputMultiplier = (value) =>{
+        setPlayer((prev) => {
+            return { ...prev, multiplier: value }
+        });
+        
+    }
+
+    useEffect(()=>{
+        console.log('change user');
+    }, [player])
+
     return <Grid>
-        <div style={{ width: '340px' }}>
-            <Grid style={{ display: 'flex',justifyContent: 'center' }} container  spacing={2}>
-                <Grid  item xs={6} style={{ paddingRight: '20px' }}>
-                    <PointInput title="Point"></PointInput>
+        <div style={{ width: '380px' }}>
+            <Grid style={{ display: 'flex', justifyContent: 'center' }} container spacing={2}>
+                <Grid item xs={6} style={{ paddingRight: '20px' }}>
+                    <PointInput isDecimal={false} title="Point" value={player.inputPoint} setValue={setInputPoint} handleIncrease={handleIncreasePoint} handleDecrease={handleDecreasePoint}></PointInput>
                 </Grid>
                 <Grid item xs={6}>
-                    <PointInput title="Multiplier"></PointInput>
+                    <PointInput isDecimal={true} title="Multiplier" value={player.multiplier} setValue={setInputMultiplier} handleIncrease={handleIncreaseMultiplier} handleDecrease={handleDecreaseMultiplier}></PointInput>
                 </Grid>
 
             </Grid>
-            <div  style={{ width: '100%', padding: '4px 0px 4px 0px' }}>
-                <Button variant="contained" color="success" style={{ width: '100%', padding: '4px 0px 4px 0px' }}>Start</Button>
+            <div style={{ width: '100%', padding: '4px 0px 4px 0px' }}>
+                <Button variant="contained" color="success" style={{ width: '100%', padding: '4px 0px 4px 0px' }} onClick={handleClickStart}>Start</Button>
             </div>
-            
+
             <div>
                 <CurrentRound></CurrentRound>
             </div>
             <div>
-            <SpeedControl></SpeedControl>
+                <SpeedControl></SpeedControl>
             </div>
         </div>
 
 
 
 
-      
-       
+
+
     </Grid>
 }

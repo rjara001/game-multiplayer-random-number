@@ -2,20 +2,21 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { CandyBlock } from './CandyBlock.jsx'
 import { Button, Grid, SpeedDial } from "@mui/material"
+import { getHour } from '../../utils/utils.jsx';
 
-export const LineGraph = () => {
+export const LineGraph = ({player}) => {
     return (
         <div>
             <div>
                 <Grid style={{ display: 'flex', justifyContent: 'center' }} container  spacing={2}>
                     <Grid item xs={4}>
-                        <CandyBlock title="115"></CandyBlock>
+                        <CandyBlock title={player.points} icon='cup'></CandyBlock>
                     </Grid>
                     <Grid item xs={4}>
-                        <CandyBlock title="Thomas"></CandyBlock>
+                        <CandyBlock title={player.name} icon='user'></CandyBlock>
                     </Grid>
                     <Grid item xs={4}>
-                        <CandyBlock title="21:30"></CandyBlock>
+                        <CandyBlock title={getHour()} icon='hour'></CandyBlock>
                     </Grid>
                 </Grid>
                 <div style={{ width: '100%', padding: '4px 0px 4px 0px' }}>

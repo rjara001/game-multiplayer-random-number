@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, TextField, Badge, Stack } from '@mui/material';
+import { IconButton, TextField, Badge, Stack } from '@mui/material';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import { makeStyles } from "@mui/styles";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -14,13 +15,13 @@ const PointInputStyles = makeStyles(() => ({
     , left: {
 
         display: 'inline-block'
-        , verticalAlign:'top'
+        , verticalAlign: 'top'
         , verticalAlign: 'bottom'
     }
     , right: {
 
         display: 'inline-block'
-        , verticalAlign:'top'
+        , verticalAlign: 'top'
         , verticalAlign: 'bottom'
     }
     , numberContainer: {
@@ -29,7 +30,7 @@ const PointInputStyles = makeStyles(() => ({
         , textAlign: 'center'
         , display: 'inline-block'
     }
-    , container:{
+    , container: {
         borderStyle: 'solid'
         , borderRadius: '6px'
         , borderWidth: '1px'
@@ -38,35 +39,47 @@ const PointInputStyles = makeStyles(() => ({
     }
 }));
 
-export const PointInput = ({title}) => {
+export const PointInput = ({ title, value, setValue, handleIncrease, handleDecrease, isDecimal }) => {
     const classes = PointInputStyles();
-    const [value, setValue] = useState(0);
 
-    const handleIncrease = () => {
-        setValue(prevValue => prevValue + 1);
+
+    const handleIncrease2 = () => {
+        handleIncrease();
     };
 
-    const handleDecrease = () => {
-
+    const handleDecrease2 = () => {
+        handleDecrease();
     }
 
-    const incrementButton = <ArrowCircleUpIcon className={classes.left} color="action" />;
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
+
+    const incrementButton = <IconButton onClick={handleIncrease2}> <ArrowCircleUpIcon /> </IconButton>;
+    const valueNumber = () => {
+        let num = isNumeric(value) ? parseFloat(value) : 0;
+        if (isDecimal)
+            return num.toFixed(2);
+
+        return num;
+    }
     const inputNumber =
         <div className={classes.numberContainer}><div style={{ fontSize: 'small' }}>{title}</div>
 
             <TextField size="small" className={classes.middle}
                 type="text"
-                value={value}
+                value={valueNumber()}
                 inputProps={{
                     style: {
 
                         textAlign: 'center',
                         padding: '2px 18px 2px 18px',
-                        display: 'block'
+                        display: 'block',
+                        fontSize: '12px'
                     }
                 }}
                 onChange={(event) => setValue(event.target.value)} /></div>;
-    const decreaseButton = <ArrowCircleUpIcon className={classes.right} color="action" />;
+    const decreaseButton = <IconButton onClick={handleDecrease2}> <ArrowCircleDownIcon /></IconButton>;
     return (
         <div className={classes.container}>
 
