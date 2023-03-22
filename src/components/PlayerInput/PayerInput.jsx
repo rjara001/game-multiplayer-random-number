@@ -6,7 +6,7 @@ import { startPlay } from '../../utils/utils.jsx'
 import { useEffect } from "react"
 
 
-export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound }) => {
+export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound, setSpeed }) => {
 
     const handleIncreasePoint = () => {
         setPlayer((prev) => {
@@ -46,14 +46,6 @@ export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound }) =
         
     }
 
-    useEffect(()=>{
-        console.log('change user');
-    }, [player])
-
-    useEffect(()=>{
-        console.log('change round');
-    }, [round])
-
     return <Grid>
         <div style={{ width: '380px' }}>
             <Grid style={{ display: 'flex', justifyContent: 'center' }} container spacing={2}>
@@ -73,7 +65,7 @@ export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound }) =
                 <CurrentRound round={round}></CurrentRound>
             </div>
             <div>
-                <SpeedControl></SpeedControl>
+                <SpeedControl setSpeed={setSpeed}></SpeedControl>
             </div>
         </div>
 

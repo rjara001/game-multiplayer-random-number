@@ -4,7 +4,7 @@ import Slider from '@mui/material/Slider';
 import { Grid } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
-export const SpeedControl = () => {
+export const SpeedControl = ({setSpeed}) => {
     const marks = [
         {
             value: 20,
@@ -47,8 +47,9 @@ export const SpeedControl = () => {
         <Box sx={{ width: '100%' }}>
             <Slider
                 aria-label="Always visible"
-                defaultValue={80}
+                defaultValue={10}
                 getAriaValueText={valuetext}
+                onChange={(event)=>setSpeed(event.target.value === "" ? "" : Number(event.target.value))}
                 step={10}
                 marks={marks}
                 valueLabelDisplay="on"

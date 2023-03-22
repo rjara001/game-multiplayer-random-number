@@ -1,6 +1,6 @@
 import { Player } from './player.jsx'
 
-export class Round {
+export class Ranking {
     constructor(){
         this.players = [
             new Player('You')
@@ -9,10 +9,6 @@ export class Round {
             , new Player('CPU 3')
             , new Player('CPU 4')
         ];
-        this.randomLimit = 0;
-        this.started = false;
-        this.speed = 1;
 
     }
-
 }

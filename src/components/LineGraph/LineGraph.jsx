@@ -5,7 +5,7 @@ import { Button, Grid, SpeedDial } from "@mui/material"
 import { getHour } from '../../utils/utils.jsx';
 import { IncrementalValue } from './IncrementalValue.jsx';
 
-export const LineGraph = ({player, round}) => {
+export const LineGraph = ({player, round, finished}) => {
 
     return (
         <div>
@@ -34,8 +34,8 @@ export const LineGraph = ({player, round}) => {
                                 },
                             }}
                         >
-                            <div>
-                                <IncrementalValue started={round.started} limit={round.randomLimit}></IncrementalValue>
+                            <div style={{ textAlign: '-webkit-center', position: 'absolute',top: '32%', left: '54%', fontSize: '50px'}}>
+                                <IncrementalValue started={round.started} limit={round.randomLimit} finished={finished} speed={round.speed}></IncrementalValue>
                             </div>
 
                         </Box>
