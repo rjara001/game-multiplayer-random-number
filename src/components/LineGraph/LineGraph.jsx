@@ -3,8 +3,10 @@ import Box from '@mui/material/Box';
 import { CandyBlock } from './CandyBlock.jsx'
 import { Button, Grid, SpeedDial } from "@mui/material"
 import { getHour } from '../../utils/utils.jsx';
+import { IncrementalValue } from './IncrementalValue.jsx';
 
-export const LineGraph = ({player}) => {
+export const LineGraph = ({player, round}) => {
+
     return (
         <div>
             <div>
@@ -31,7 +33,12 @@ export const LineGraph = ({player}) => {
                                     opacity: [0.9, 0.8, 0.7],
                                 },
                             }}
-                        />
+                        >
+                            <div>
+                                <IncrementalValue started={round.started} limit={round.randomLimit}></IncrementalValue>
+                            </div>
+
+                        </Box>
                     </div>
                 </div>
             </div>

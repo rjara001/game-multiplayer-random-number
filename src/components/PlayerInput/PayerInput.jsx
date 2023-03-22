@@ -4,20 +4,9 @@ import { CurrentRound } from './CurrentRound.jsx'
 import { SpeedControl } from './SpeedControl.jsx'
 import { startPlay } from '../../utils/utils.jsx'
 import { useEffect } from "react"
-import {getRoundPlaying} from '../../utils/utils.jsx';
 
-export const PlayerInput = ({ player, setPlayer, round, setRound }) => {
 
-    const handleClickStart = () => {
-        setPlayer((prev)=>{
-            return {... prev, points: prev.points - prev.inputPoint}
-        });
-
-        setRound((prev)=>{
-            return {... prev, players:getRoundPlaying(prev, player)}
-        });
-
-    }
+export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound }) => {
 
     const handleIncreasePoint = () => {
         setPlayer((prev) => {
@@ -77,7 +66,7 @@ export const PlayerInput = ({ player, setPlayer, round, setRound }) => {
 
             </Grid>
             <div style={{ width: '100%', padding: '4px 0px 4px 0px' }}>
-                <Button variant="contained" color="success" style={{ width: '100%', padding: '4px 0px 4px 0px' }} onClick={handleClickStart}>Start</Button>
+                <Button variant="contained" color="success" style={{ width: '100%', padding: '4px 0px 4px 0px' }} onClick={handleClickSetRound}>Start</Button>
             </div>
 
             <div>

@@ -7,24 +7,33 @@ import { InserUser } from "../components/InsertUser/InsertUser.jsx"
 import { useEffect, useState } from "react"
 import { Player } from "../models/player.jsx"
 import { Round } from "../models/round.jsx"
+import {getRoundPlaying, getLimitValueRandom} from '../utils/utils.jsx';
 
 export const Playboard = () => {
     const [player, setPlayer] = useState(new Player());
     const [round, setRound] = useState(new Round());
-    // useEffect(()=>{
-    //     console.log(UserName);
-    // }, [UserName]);
+  
+    const handleClickStart = () => {
+        setPlayer((prev)=>{
+            return {... prev, points: prev.points - prev.inputPoint}
+        });
+
+        setRound((prev)=>{
+            return {... prev, players:getRoundPlaying(prev, player), randomLimit: getLimitValueRandom(), started:true}
+        });
+    }
+
 
     return (
         <Grid>
             <Box>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <div style={{ paddingRight: '20px' }}>
-                        {player.isActive && <PlayerInput player={player} setPlayer={setPlayer} round={round} setRound={setRound}></PlayerInput>}
+                        {player.isActive && <PlayerInput player={player} setPlayer={setPlayer} round={round} handleClickSetRound={handleClickStart}></PlayerInput>}
                         {!player.isActive && <InserUser player={player} setPlayer={setPlayer}></InserUser>}
                     </div>
                     <div>
-                        <LineGraph player={player}></LineGraph>
+                        <LineGraph player={player} round={round}></LineGraph>
                     </div>
                    
                 </div>

@@ -9,7 +9,8 @@ export class Round {
             , new Player('CPU 3')
             , new Player('CPU 4')
         ];
-
+        this.randomLimit = 10;
+        this.started = false;
 
     }
 

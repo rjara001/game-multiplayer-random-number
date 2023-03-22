@@ -24,8 +24,15 @@ export const getRoundPlaying = (prev, player) => {
     return newRound;
 }
 
+export const getLimitValueRandom = () => {
+    const max = 10;
+    const min = 0;
+    return (Math.random() * (max - min) + min).toFixed(2);
+}
+
 function calculateRandomMultiplier() {
     const max = 10;
     const min = 0;
     return (Math.random() * (max - min) + min).toFixed(2);
 }
+
