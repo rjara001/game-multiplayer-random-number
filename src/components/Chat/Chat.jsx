@@ -1,21 +1,84 @@
-import Box from '@mui/material/Box';
 
-export const Chat = () => {
+import {ListMessage} from './ListMessage.jsx'
+import { Button, Box, Grid } from "@mui/material"
+import { useEffect, useState, useCallback} from "react"
+import TextField from '@mui/material/TextField';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
+
+export const Chat = ({player}) => {
+    // const [messages, setMessages] = useState([{from:'Cpu1', text:'Hi'},{from:'Me', text:'Hi'}]);
+    const [socketUrl, setSocketUrl] = useState('ws://localhost:8080');
+    const [messageHistory, setMessageHistory] = useState([]);
+
+    const [message, setMessage] = useState('');
+    const [activeSendMessage, setActiveSendMessage] = useState(false);
+
+    const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+
+    useEffect(() => {
+        if (lastMessage !== null) {
+         
+            if (lastMessage.data instanceof Blob) {
+                let reader = new FileReader();
+        
+                reader.onload = () => {
+                    setMessageHistory((prev) => prev.concat(JSON.parse(reader.result)));
+                    console.log("Result: " + reader.result);
+                };
+        
+                reader.readAsText(lastMessage.data);
+            } else {
+                console.log("Result: " + lastMessage.data);
+            }
+        }
+      }, [lastMessage, setMessageHistory]);
+
+      useEffect(()=>{
+        if (activeSendMessage)
+        {
+            sendMessage(JSON.stringify({text:message, user:player.name}));
+            setActiveSendMessage(false);
+            setMessage('');
+        }
+            
+    }, [activeSendMessage])
+
+    const handleSendClick = () => {
+        setActiveSendMessage(true);
+    }
+
     return <div>
         <div>
             <Box
                 sx={{
                     width: '100%',
                     height: 250,
-                    backgroundColor: 'primary.dark',
+     
                     '&:hover': {
                         backgroundColor: 'primary.main',
                         opacity: [0.9, 0.8, 0.7],
                     },
                 }}
             >
-                Upcomming a chat
+                <ListMessage messages={messageHistory} lastMessage={lastMessage}></ListMessage>
+                <form style={{position:'absolute', bottom:'50px'}}>
+                    <Grid container spacing={2} style={{Padding:'3px', width:'100%'}}>
+                        <Grid xs={10}>  <TextField style={{ width: '100%' }}
+                            label="Write a message"
+                            size="small"
+                            variant="outlined"
+                            value={message}
+                            onChange={(e)=>setMessage(e.target.value)}
+                            disabled={readyState !== ReadyState.OPEN}
+                        /></Grid>
+                        <Grid xs={2}> 
+                            <Button variant="contained" color="primary" onClick={handleSendClick}>
+                                Send
+                            </Button></Grid>
+                    </Grid>
 
+
+                </form>
             </Box>
         </div>
     </div>

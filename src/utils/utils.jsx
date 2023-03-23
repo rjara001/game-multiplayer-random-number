@@ -23,10 +23,10 @@ export const getRoundPlaying = (prev, player) => {
     return newRound;
 }
 
-export const getResultRoundPlaying = (prev, player) => {
+export const getResultRoundPlaying = (prev, limit) => {
 
     return prev.players.map((_) => {
-        return { ..._, points: parseInt(_.points * _.multiplier) }
+        return { ..._, points: (_.multiplier> parseFloat(limit / 100))?0: parseInt(_.points * _.multiplier) }
 
     });
 
@@ -40,18 +40,18 @@ export const getScorePlaying = (prev, player, limit) => {
     return newRound.sort((a, b) => b.score - a.score);
 }
 
-function calculateScore(player, limit) {
-    if (!player)
-        return player;
-    if (!player.score)
-        player.score = 0;
-    player.score = parseFloat(player.score) + parseFloat(player.multiplier);
+// function calculateScore(player, limit) {
+//     if (!player)
+//         return player;
+//     if (!player.score)
+//         player.score = 0;
+//     player.score = parseFloat(player.score) + parseFloat(player.multiplier);
 
-    if (parseFloat(player.multiplier) > parseFloat(limit / 100))
-        player.score = 0;
+//     if (parseFloat(player.multiplier) > parseFloat(limit / 100))
+//         player.score = 0;
 
-    return player;
-}
+//     return player;
+// }
 
 export const getScore = (players) => {
     return players.map((_, i) => {

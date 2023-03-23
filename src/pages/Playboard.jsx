@@ -31,8 +31,15 @@ export const Playboard = () => {
         if (round.started === true) {
     
             setRound((prev) => {
-                return { ...prev, players: getResultRoundPlaying(prev, player, limit), started: false }
+                return { ...prev, players: getResultRoundPlaying(prev, limit), started: false }
             });
+
+            setPlayer((prev) => {
+                let _points =  (prev.multiplier> parseFloat(limit / 100))?0: parseInt(prev.points * prev.multiplier);
+
+                return { ...prev, points:_points, totalPoints:prev.totalPoints + _points }
+            });
+    
         }
 
     }
@@ -42,10 +49,7 @@ export const Playboard = () => {
             return { ...prev, players: getScorePlaying(round, player, limit) }
         });
 
-        setPlayer((prev) => {
-            return { ...prev, totalPoints: prev.totalPoints + prev.points }
-        });
-
+  
     }, [round.players])
 
     useEffect(() => {
@@ -78,7 +82,7 @@ export const Playboard = () => {
                     <Grid item xs={8}>
                         <TableRanking round={ranking}></TableRanking>
                     </Grid>
-                    <Grid item xs={4}><Chat></Chat></Grid>
+                    <Grid item xs={4}><Chat player={player} ></Chat></Grid>
                 </Grid>
             </Box>
             <Box></Box>
