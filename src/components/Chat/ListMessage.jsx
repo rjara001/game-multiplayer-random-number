@@ -10,7 +10,7 @@ import Avatar from '@mui/material/Avatar';
 export const ListMessage = ({ messages }) => {
     return <div>
 
-        <List dense sx={{ width: '100%', maxWidth: 360, height:160, bgcolor: 'background.paper', overflowY:'auto' }}>
+        <List dense sx={{ width: '100%', maxWidth: 360, height:240, bgcolor: 'background.paper', overflowY:'auto' }}>
             {messages.map((message, idx) => (
  
                     <ListItem

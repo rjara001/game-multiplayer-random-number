@@ -29,27 +29,27 @@ export const Playboard = () => {
 
     const processFinished = () => {
         if (round.started === true) {
-    
+
             setRound((prev) => {
                 return { ...prev, players: getResultRoundPlaying(prev, limit), started: false }
             });
 
             setPlayer((prev) => {
-                let _points =  (prev.multiplier> parseFloat(limit / 100))?0: parseInt(prev.points * prev.multiplier);
+                let _points = (prev.multiplier > parseFloat(limit / 100)) ? 0 : parseInt(prev.points * prev.multiplier);
 
-                return { ...prev, points:_points, totalPoints:prev.totalPoints + _points }
+                return { ...prev, points: _points, totalPoints: prev.totalPoints + _points }
             });
-    
+
         }
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setRanking((prev) => {
             return { ...prev, players: getScorePlaying(round, player, limit) }
         });
 
-  
+
     }, [round.players])
 
     useEffect(() => {

@@ -48,22 +48,14 @@ export const Chat = ({player}) => {
     }
 
     return <Box
-                sx={{
-                    width: '100%',
-                    height: 250,
-     
-                    '&:hover': {
-                        backgroundColor: 'primary.main',
-                        opacity: [0.9, 0.8, 0.7],
-                    }
-                }}
             >
                 <ListMessage messages={messageHistory} lastMessage={lastMessage}></ListMessage>
-                <form style={{position:'absolute', bottom:'50px'}}>
+                
+                <form style={{paddingTop:'55px'}}>
                     <Grid container spacing={2} style={{Padding:'3px', width:'100%'}}>
                         <Grid xs={10}>  
                             <TextField style={{ width: '100%' }}
-                            label="Write a message"
+                            label={readyState !== ReadyState.OPEN?'disconected':'connected'}
                             size="small"
                             variant="outlined"
                             value={message}
