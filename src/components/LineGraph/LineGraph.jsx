@@ -12,7 +12,7 @@ export const LineGraph = ({player, round, finished}) => {
             <div>
                 <Grid style={{ display: 'flex', justifyContent: 'center' }} container  spacing={2}>
                     <Grid item xs={4}>
-                        <CandyBlock title={player.points} icon='cup'></CandyBlock>
+                        <CandyBlock title={player.totalPoints} icon='cup'></CandyBlock>
                     </Grid>
                     <Grid item xs={4}>
                         <CandyBlock title={player.name} icon='user'></CandyBlock>
@@ -25,7 +25,7 @@ export const LineGraph = ({player, round, finished}) => {
                     <div>
                         <Box
                             sx={{
-                                width: 800,
+                                width: '100%',
                                 height: 600,
                                 backgroundColor: 'primary.dark',
                                 '&:hover': {
@@ -34,7 +34,7 @@ export const LineGraph = ({player, round, finished}) => {
                                 },
                             }}
                         >
-                            <div style={{ textAlign: '-webkit-center', position: 'absolute',top: '32%', left: '54%', fontSize: '50px'}}>
+                            <div style={{ textAlign: '-webkit-center', position: 'absolute',top: '32%', left: '57%', fontSize: '50px'}}>
                                 <IncrementalValue started={round.started} limit={round.randomLimit} finished={finished} speed={round.speed}></IncrementalValue>
                             </div>
 

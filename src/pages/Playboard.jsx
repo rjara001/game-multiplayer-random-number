@@ -9,7 +9,7 @@ import { Player } from "../models/player.jsx"
 import { Round } from "../models/round.jsx"
 import { Ranking } from '../models/ranking.jsx'
 
-import {getRoundPlaying, getResultRoundPlaying, getLimitValueRandom} from '../utils/utils.jsx';
+import { getScorePlaying, getRoundPlaying, getResultRoundPlaying, getLimitValueRandom } from '../utils/utils.jsx';
 
 export const Playboard = () => {
     const [player, setPlayer] = useState(new Player());
@@ -22,50 +22,64 @@ export const Playboard = () => {
 
         setLimit(getLimitValueRandom());
 
-        setPlayer((prev)=>{
-            return {... prev, points: prev.points - prev.inputPoint}
+        setPlayer((prev) => {
+            return { ...prev, totalPoints: prev.totalPoints - prev.points }
         });
     }
 
-    const processFinished = () =>{
-        if (round.started===true)
-            setRanking((prev)=>{
-                return {... prev, players:getResultRoundPlaying(prev, player, limit)}
+    const processFinished = () => {
+        if (round.started === true) {
+    
+            setRound((prev) => {
+                return { ...prev, players: getResultRoundPlaying(prev, player, limit), started: false }
             });
+        }
 
-            setRound((prev)=>{
-                return {... prev, started:false}
-            });
     }
 
     useEffect(()=>{
-        if (limit>0)
-            setRound((prev)=>{
-                return {... prev, players:getRoundPlaying(prev, player, limit), randomLimit: limit, started:true}
+        setRanking((prev) => {
+            return { ...prev, players: getScorePlaying(round, player, limit) }
+        });
+
+        setPlayer((prev) => {
+            return { ...prev, totalPoints: prev.totalPoints + prev.points }
+        });
+
+    }, [round.players])
+
+    useEffect(() => {
+        if (limit > 0)
+            setRound((prev) => {
+                return { ...prev, players: getRoundPlaying(prev, player, limit), randomLimit: limit, started: true }
             });
     }, [limit]);
 
-    useEffect(()=>{
-            setRound((prev)=>{
-                return {... prev, speed}
-            });
+    useEffect(() => {
+        setRound((prev) => {
+            return { ...prev, speed }
+        });
     }, [speed]);
 
     return (
-        <Grid>
-            <Box>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div style={{ paddingRight: '20px' }}>
+        <Grid style={{ textAlign: '-webkit-center' }}>
+            <Box style={{ width: '60%' }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={4} style={{ borderColor: 'gold', borderStyle: 'solid', borderWidth: 'thin' }}>
                         {player.isActive && <PlayerInput player={player} setPlayer={setPlayer} round={round} handleClickSetRound={handleClickStart} setSpeed={setSpeed}></PlayerInput>}
                         {!player.isActive && <InserUser player={player} setPlayer={setPlayer}></InserUser>}
-                    </div>
-                    <div>
+                    </Grid>
+                    <Grid item xs={8}>
                         <LineGraph player={player} round={round} finished={processFinished}></LineGraph>
-                    </div>
-                   
-                </div>
-                <TableRanking round={ranking}></TableRanking>
-                <Chat></Chat>
+                    </Grid>
+
+                </Grid>
+                <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                        <TableRanking round={ranking}></TableRanking>
+                    </Grid>
+                    <Grid item xs={4}><Chat></Chat></Grid>
+                </Grid>
             </Box>
             <Box></Box>
         </Grid>

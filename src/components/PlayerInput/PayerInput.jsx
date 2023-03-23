@@ -10,13 +10,13 @@ export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound, set
 
     const handleIncreasePoint = () => {
         setPlayer((prev) => {
-            return { ...prev, inputPoint: prev.inputPoint + 25 }
+            return { ...prev, points: prev.points + 25 }
         });
     };
 
     const handleDecreasePoint = () => {
         setPlayer((prev) => {
-            return { ...prev, inputPoint: prev.inputPoint - 25 }
+            return { ...prev, points: prev.points - 25 }
         });
     }
 
@@ -34,7 +34,7 @@ export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound, set
 
     const setInputPoint = (value) =>{
         setPlayer((prev) => {
-            return { ...prev, inputPoint: value }
+            return { ...prev, points: value }
         });
         
     }
@@ -47,10 +47,10 @@ export const PlayerInput = ({ player, setPlayer, round, handleClickSetRound, set
     }
 
     return <Grid>
-        <div style={{ width: '380px' }}>
+        <div style={{ width: '100%' }}>
             <Grid style={{ display: 'flex', justifyContent: 'center' }} container spacing={2}>
-                <Grid item xs={6} style={{ paddingRight: '20px' }}>
-                    <PointInput isDecimal={false} title="Point" value={player.inputPoint} setValue={setInputPoint} handleIncrease={handleIncreasePoint} handleDecrease={handleDecreasePoint}></PointInput>
+                <Grid item xs={6}>
+                    <PointInput isDecimal={false} title="Point" value={player.points} setValue={setInputPoint} handleIncrease={handleIncreasePoint} handleDecrease={handleDecreasePoint}></PointInput>
                 </Grid>
                 <Grid item xs={6}>
                     <PointInput isDecimal={true} title="Multiplier" value={player.multiplier} setValue={setInputMultiplier} handleIncrease={handleIncreaseMultiplier} handleDecrease={handleDecreaseMultiplier}></PointInput>

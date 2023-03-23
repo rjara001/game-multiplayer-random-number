@@ -6,6 +6,7 @@ export const IncrementalValue = ({started, limit, finished, speed}) => {
     const targetValue = limit;
    
     const [increment, setIncrement] = useState(1);
+    const [flagFinished, setFlagFinished] = useState(false);
 
     useEffect(()=>{
         setIncrement(speed/3);
@@ -14,13 +15,21 @@ export const IncrementalValue = ({started, limit, finished, speed}) => {
             setCurrentValue(0);
     }, [started, speed]);
 
+    useEffect(()=>{
+        if (flagFinished===true)
+        {
+            finished();
+            setFlagFinished(false);
+        }
+    }, [flagFinished])
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentValue(currentValue => {
                 const newValue = currentValue + increment;
                 if (newValue >= targetValue) {
                     clearInterval(intervalId); // Stop the interval once target value is reached
-                    finished()
+                    setFlagFinished(true)
                     return targetValue;
                 }
                 return newValue;

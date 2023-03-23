@@ -5,18 +5,17 @@ export const getHour = () => {
 
 export const getRows = (players) => {
     return players.map((_, i) => {
-        return { id: i, Name: _.name, Point: !_.isActive ? '-' : _.inputPoint, Multiplier: !_.isActive ? '-' : _.multiplier }
+        return { id: i, Name: _.name, Point: !_.isActive ? '-' : _.points, Multiplier: !_.isActive ? '-' : _.multiplier }
     })
 }
 
 export const getRoundPlaying = (prev, player) => {
     const newRound = prev.players.map((_, i) => {
-        return (_.name === 'You' || _.name === player.name)?player:undefined || {
+        return (_.name === 'You' || _.name === player.name) ? player : undefined || {
             id: i
             , name: _.name
-            , points: _.points
+            , points: 100
             , multiplier: calculateRandomMultiplier()
-            , inputPoint: 100
             , isActive: true
         }
     });
@@ -24,33 +23,31 @@ export const getRoundPlaying = (prev, player) => {
     return newRound;
 }
 
-export const getResultRoundPlaying = (prev, player, limit) => {
-    const newRound = prev.players.map((_, i) => {
-        let you = (_.name === 'You' || _.name === player.name)?player:undefined;
-        let cpu = {
-            id: i
-            , name: _.name
-            , points: _.points
-            , multiplier: calculateRandomMultiplier()
-            , inputPoint: 100
-            , isActive: true
-        }
-        cpu = calculateScore(cpu, limit);
-        you = calculateScore(you, limit);
+export const getResultRoundPlaying = (prev, player) => {
 
-        return you || cpu;
+    return prev.players.map((_) => {
+        return { ..._, points: parseInt(_.points * _.multiplier) }
+
     });
 
-    return newRound.sort((a,b)=>b.score - a.score);
+}
+
+export const getScorePlaying = (prev, player, limit) => {
+    const newRound = prev.players.map((_) => {
+        return { ..._, score: _.points, totalPoints: _.totalPoints + _.points }
+    });
+
+    return newRound.sort((a, b) => b.score - a.score);
 }
 
 function calculateScore(player, limit) {
     if (!player)
-        return undefined;
-        
-    player.score = player.multiplier;
+        return player;
+    if (!player.score)
+        player.score = 0;
+    player.score = parseFloat(player.score) + parseFloat(player.multiplier);
 
-    if (parseFloat(player.multiplier) > parseFloat(limit/100))
+    if (parseFloat(player.multiplier) > parseFloat(limit / 100))
         player.score = 0;
 
     return player;
@@ -58,7 +55,7 @@ function calculateScore(player, limit) {
 
 export const getScore = (players) => {
     return players.map((_, i) => {
-        return { Number: i, Name: _.name, Score: _.score }
+        return { Number: i, Name: (_.isActive==true)?_.name:'-', Score: (_.isActive==true)?_.score:'-' }
     })
 }
 

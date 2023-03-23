@@ -53,7 +53,7 @@ export const PointInput = ({ title, value, setValue, handleIncrease, handleDecre
 
     function isNumeric(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
-      }
+    }
 
     const incrementButton = <IconButton onClick={handleIncrease2}> <ArrowCircleUpIcon /> </IconButton>;
     const valueNumber = () => {
@@ -83,11 +83,13 @@ export const PointInput = ({ title, value, setValue, handleIncrease, handleDecre
     return (
         <div className={classes.container}>
 
-            {incrementButton}
-
-            {inputNumber}
 
             {decreaseButton}
+            
+            {inputNumber}
+
+            {incrementButton}
+
 
             {/* <Icon color="primary" onClick={handleIncrease}>add_circle</Icon> */}
             {/* <TextField

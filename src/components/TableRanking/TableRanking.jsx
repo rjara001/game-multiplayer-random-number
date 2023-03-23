@@ -11,19 +11,19 @@ const columns = [
     {
         field: 'Number',
         headerName: 'Number',
-        width: 100,
+        width: 200,
         editable: true,
     },
     {
         field: 'Name',
         headerName: 'Name',
-        width: 100,
+        width: 300,
         editable: true,
     },
     {
         field: 'Score',
         headerName: 'Score',
-        width: 100,
+        width: 200,
         editable: true,
     }
 ];
