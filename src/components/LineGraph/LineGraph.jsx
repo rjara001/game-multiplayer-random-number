@@ -10,7 +10,7 @@ export const LineGraph = ({player, round, finished}) => {
     return (
         <div>
             <div>
-                <Grid style={{ display: 'flex', justifyContent: 'center' }} container  spacing={2}>
+                <Grid container spacing={2}>
                     <Grid item xs={4}>
                         <CandyBlock title={player.totalPoints} icon='cup'></CandyBlock>
                     </Grid>

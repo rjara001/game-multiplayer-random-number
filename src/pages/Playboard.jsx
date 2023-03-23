@@ -67,7 +67,7 @@ export const Playboard = () => {
 
     return (
         <Grid style={{ textAlign: '-webkit-center' }}>
-            <Box style={{ width: '60%' }}>
+            <Box style={{ width: '85%' }}>
                 <Grid container spacing={2}>
                     <Grid item xs={4} style={{ borderColor: 'gold', borderStyle: 'solid', borderWidth: 'thin' }}>
                         {player.isActive && <PlayerInput player={player} setPlayer={setPlayer} round={round} handleClickSetRound={handleClickStart} setSpeed={setSpeed}></PlayerInput>}
